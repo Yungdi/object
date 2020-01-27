@@ -47,10 +47,57 @@ CHAPTER 01 객체, 설계
 기능은 제대로 동작하지만 이해하기 어렵고 변경하기 어려움  
 이해하기 어려운 문제와 변경하기 변경하기 어려운 문제는 서로 엮여 있다  
 **해결 방법**: 너무 세세한 부분까지 알지 못하도록 정보를 차단 
+
 #### 자율성을 높이자
 설계를 변경하기 어려운 이유는 Theater 가 Audience 와 TicketSeller 뿐만 아니라 Audience 소유의 Bag 과 TicketSeller 가 근무하는 TicketOffice 까지 마음대로 접근할 수 있기 때문이다
 1. Theater 의 enter 메서드에서 TicketOffice 에 접근하는 모든 코드를 TicketSeller 내부로 숨김    
 ticketOffice 는 private 이므로 외부에서 접근할 수 없음 -> 캡슐화(encapsulation)  
 <img width="610" alt="극장 1차개선" src="https://user-images.githubusercontent.com/26158696/73187082-26b2ab80-4164-11ea-91bd-05f12f290421.png">
-2. Audience 캡슐화 개선
+2. Audience 캡슐화
+자신의 가방 안에 초대장이 들어 있는 지를 스스로 확인한다  
+제3자가 자신의 가방을 열어보도록 허용하지 않는다  
+**Bag 의 존재를 캡슐화**  
+<img width="610" alt="2차 개선" src="https://user-images.githubusercontent.com/26158696/73188372-1bf91600-4166-11ea-89e2-28adad99aa63.png">
+  
+#### 무엇이 개선됐는가
+수정된 Audience 와 TicketSeller 는 자신이 가지고 있는 소지품을 스스로 관리한다  
+-> 읽기 쉬운 코드, 변경에 용이한 코드  
+Audience 나 TicketSeller 의 내부 구현을 변경하더라도 Theater 를 함께 변경할 필요가 없어졌다
+
+#### 어떻게 한 것인가
+* TicketOffice 를 사용하는 모든 부분을 TicketSeller 내부로 옮김
+* Bag 을 사용하는 부분을 Audience 내부로 옮김  
+-> 객체의 자율성을 높이는 방향으로 설계를 개선  
+
+#### 캡슐화와 응집도
+핵심은 객체 내부의 상태를 캡슐화하고 객체 간에 오직 메시지를 통해서만 상호작용하도록 만드는 것이다
+* Theater 는 TicketSeller 의 내부에 대해서는 전혀 알지 못한다.  
+-> sellTo 메서드를 통해 메시지를 전달한다.
+* TicketSeller 는 Audience 의 내부에 대해서 전혀 알지 못한다.  
+-> bug 메서드를 통해 메시지를 전달한다.  
+**응집도가 높음**
+
+#### 절차지향과 객체지향  
+개선 이전에는 관람객을 입장시키는 데 필요한 정보를 제공하고 모든 처리는 Theater 의 enter 메서드안에 존재했었다  
+enter 메서드는 프로세스이며 Audience, TicketSeller, TicketOffice, Bag 은 데이터이다.  
+* 프로세스와 데이터를 별도의 모듈에 위치시키는 방식을 절차적 프로그래밍이라 한다.  
+* 절차적 프로그래밍에서는 관람객과 판매원이 수동적인 존재  
+* 데이터의 변경으로 인한 영향을 고립/격리시키기 어렵다 -> 변경하기 어려움  
+
+#### 책임의 이동
+근본적인 차이는 책임의 이동  
+* 개선 이전에는 책임이 Theater 에 집중되어 있음  
+* 개선 이후에는 각 객체가 자신이 맡은 일은 스스로 처리 -> 책임의 이동  
+* 데이터와 프로세스를 하나의 단위로 통합  
+* TicketSeller 의 책임: 티켓을 판매
+* Audience 의 책임: 티켓을 구매
+* 설계를 어렵게 만드는 것은 의존성
+* 불필요한 의존성을 제거함으로써 객체 사이의 결합도를 낮춤
+* Theater 가 몰라도 되는 세부사항을 Audience 와 TicketSeller 내부로 감춰 캡슐화
+* 객체의 자율성을 높이고 객체들의 응집도를 높힘
+
+#### 더 개선할 수 있다
+
+
+####
   
