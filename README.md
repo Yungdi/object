@@ -29,7 +29,7 @@ CHAPTER 01 객체, 설계
 #### 예상을 빗나가는 코드
 1. 소극장은 관람객의 가방을 열어 그 안에 초대장이 들어 있는 지 살펴본다
 2. 가방 안에 초대장이 들어 있으면 판매원은 매표소에 보관돼 있는 티켓을 관람객의 가방 안으로 옮긴다
-3. 가방 안에 초대장이 들어 있지 않다면 관람객의 가방에서 티켓 금액만큼의 현금을 꺼내 매표소에 적립한 후에 매표소에 ㅔ보관돼 있는 티켓을 괄람객의 가방 안으로 옮긴다  
+3. 가방 안에 초대장이 들어 있지 않다면 관람객의 가방에서 티켓 금액만큼의 현금을 꺼내 매표소에 적립한 후에 매표소에 보관돼 있는 티켓을 괄람객의 가방 안으로 옮긴다  
 **문제점**  
 * 동작 방식이 상식과는 너무 달라 이해하기 어려움 -> 이해하기 어려움
 * enter 메소드는 세부적인 내용들을 한꺼번에 기억하고 있어야 한다 -> 이해하기 어려움
@@ -49,4 +49,8 @@ CHAPTER 01 객체, 설계
 **해결 방법**: 너무 세세한 부분까지 알지 못하도록 정보를 차단 
 #### 자율성을 높이자
 설계를 변경하기 어려운 이유는 Theater 가 Audience 와 TicketSeller 뿐만 아니라 Audience 소유의 Bag 과 TicketSeller 가 근무하는 TicketOffice 까지 마음대로 접근할 수 있기 때문이다
-1. Theater 의 enter 메서드에서 TicketOffice 에 접근하는 모든 코드를 TicketSeller 내부로 숨김
+1. Theater 의 enter 메서드에서 TicketOffice 에 접근하는 모든 코드를 TicketSeller 내부로 숨김    
+ticketOffice 는 private 이므로 외부에서 접근할 수 없음 -> 캡슐화(encapsulation)  
+<img width="610" alt="극장 1차개선" src="https://user-images.githubusercontent.com/26158696/73187082-26b2ab80-4164-11ea-91bd-05f12f290421.png">
+2. Audience 캡슐화 개선
+  
