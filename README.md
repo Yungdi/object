@@ -93,11 +93,33 @@ enter 메서드는 프로세스이며 Audience, TicketSeller, TicketOffice, Bag 
 * Audience 의 책임: 티켓을 구매
 * 설계를 어렵게 만드는 것은 의존성
 * 불필요한 의존성을 제거함으로써 객체 사이의 결합도를 낮춤
-* Theater 가 몰라도 되는 세부사항을 Audience 와 TicketSeller 내부로 감춰 캡슐화
+* Theater 가 몰도 되는 세부사항을 Audience 와 TicketSeller 내부로 감춰 캡슐화
 * 객체의 자율성을 높이고 객체들의 응집도를 높힘
 
 #### 더 개선할 수 있다
+1. Bag 개선
+* Bag 은 Audience 에 끌려다니는 수동적인 존재
+* public 메서드였던 hasInvitation, minusAmount, setTicket 를 private 으로 변경  
+* Bag 의 구현을 캡슐화 -> Audience 를 Bag 의 구현이 아닌 인터페이스에만 의존하도록 수정
+2. TicketSeller 개선
+* TicketSeller 는 TicketOffice 에 있는 Ticket 을 마음대로 꺼내서 자기 멋대로 Audience 에 팔고 Audience 에게 받은 돈을 마음대로 TicketOffice 에 넣어 버림
+* TicketOffice 에 sellTicketTo 메서드 추가하고 TicketSeller 의 sellTo 메서드의 구현을 옮김
+* TicketSeller 가 Ticket 의 의존성을 제거했지만, TicketOffice 는 Audience 의 의존성이 추가됨
+* 트레이드오프가 발생
 
+#### 그래, 거짓말이다!
+* 관람객과 판매자가 스스로 자신의 일을 처리하기 때문에 코드에서 Audience 와 TicketSeller 역시 스스로 자신을 책임져야 한다
+* 직관에 따르는 코드는 이해하기 더 쉽다
+* 현실에서 Theater, Bag, TicketOffice 는 자율적인 존재지만 객체지향에서는 자율적인 존재로 바뀐다
 
-####
+04 객체지향 설계
+-------------
+#### 설계가 왜 필요한가
+* 설계란 코드를 배치하는 것이다
+* 설계는 코드 작성의 일부이며 코드를 작성하지 않고서는 검증할 수 없다
+
+#### 객체지향 설계
+* 변경에 유연하게 대응할 수 있는 코드
+* 의존성을 효율적으로 통제할 수 있는 다양한 방법
+* 변경 가능한 코드란 이해하기 쉬운 코드
   
