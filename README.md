@@ -33,7 +33,7 @@ CHAPTER 01 객체, 설계
 **문제점**  
 * 동작 방식이 상식과는 너무 달라 이해하기 어려움 -> 이해하기 어려움
 * enter 메소드는 세부적인 내용들을 한꺼번에 기억하고 있어야 한다 -> 이해하기 어려움
-* Audience 와 TicketSeller 를 변경할 경우 Theater 도 변경해야 한다 -> 변경에 용이하지 않음
+* chapter1.Audience 와 chapter1.TicketSeller 를 변경할 경우 chapter1.Theater 도 변경해야 한다 -> 변경에 용이하지 않음
 
 #### 변경에 취약한 코드
 * 관람객이 가방을 들고 있지 않다면?
@@ -49,68 +49,68 @@ CHAPTER 01 객체, 설계
 **해결 방법**: 너무 세세한 부분까지 알지 못하도록 정보를 차단 
 
 #### 자율성을 높이자
-설계를 변경하기 어려운 이유는 Theater 가 Audience 와 TicketSeller 뿐만 아니라 Audience 소유의 Bag 과 TicketSeller 가 근무하는 TicketOffice 까지 마음대로 접근할 수 있기 때문이다
-1. Theater 의 enter 메서드에서 TicketOffice 에 접근하는 모든 코드를 TicketSeller 내부로 숨김    
+설계를 변경하기 어려운 이유는 chapter1.Theater 가 chapter1.Audience 와 chapter1.TicketSeller 뿐만 아니라 chapter1.Audience 소유의 chapter1.Bag 과 chapter1.TicketSeller 가 근무하는 chapter1.TicketOffice 까지 마음대로 접근할 수 있기 때문이다
+1. chapter1.Theater 의 enter 메서드에서 chapter1.TicketOffice 에 접근하는 모든 코드를 chapter1.TicketSeller 내부로 숨김    
 ticketOffice 는 private 이므로 외부에서 접근할 수 없음 -> 캡슐화(encapsulation)  
 <img width="610" alt="극장 1차개선" src="https://user-images.githubusercontent.com/26158696/73187082-26b2ab80-4164-11ea-91bd-05f12f290421.png">
-2. Audience 캡슐화
+2. chapter1.Audience 캡슐화
 자신의 가방 안에 초대장이 들어 있는 지를 스스로 확인한다  
 제3자가 자신의 가방을 열어보도록 허용하지 않는다  
-**Bag 의 존재를 캡슐화**  
+**chapter1.Bag 의 존재를 캡슐화**  
 <img width="610" alt="2차 개선" src="https://user-images.githubusercontent.com/26158696/73188372-1bf91600-4166-11ea-89e2-28adad99aa63.png">
   
 #### 무엇이 개선됐는가
-수정된 Audience 와 TicketSeller 는 자신이 가지고 있는 소지품을 스스로 관리한다  
+수정된 chapter1.Audience 와 chapter1.TicketSeller 는 자신이 가지고 있는 소지품을 스스로 관리한다  
 -> 읽기 쉬운 코드, 변경에 용이한 코드  
-Audience 나 TicketSeller 의 내부 구현을 변경하더라도 Theater 를 함께 변경할 필요가 없어졌다
+chapter1.Audience 나 chapter1.TicketSeller 의 내부 구현을 변경하더라도 chapter1.Theater 를 함께 변경할 필요가 없어졌다
 
 #### 어떻게 한 것인가
-* TicketOffice 를 사용하는 모든 부분을 TicketSeller 내부로 옮김
-* Bag 을 사용하는 부분을 Audience 내부로 옮김  
+* chapter1.TicketOffice 를 사용하는 모든 부분을 chapter1.TicketSeller 내부로 옮김
+* chapter1.Bag 을 사용하는 부분을 chapter1.Audience 내부로 옮김  
 -> 객체의 자율성을 높이는 방향으로 설계를 개선  
 
 #### 캡슐화와 응집도
 핵심은 객체 내부의 상태를 캡슐화하고 객체 간에 오직 메시지를 통해서만 상호작용하도록 만드는 것이다
-* Theater 는 TicketSeller 의 내부에 대해서는 전혀 알지 못한다.  
+* chapter1.Theater 는 chapter1.TicketSeller 의 내부에 대해서는 전혀 알지 못한다.  
 -> sellTo 메서드를 통해 메시지를 전달한다.
-* TicketSeller 는 Audience 의 내부에 대해서 전혀 알지 못한다.  
+* chapter1.TicketSeller 는 chapter1.Audience 의 내부에 대해서 전혀 알지 못한다.  
 -> bug 메서드를 통해 메시지를 전달한다.  
 **응집도가 높음**
 
 #### 절차지향과 객체지향  
-개선 이전에는 관람객을 입장시키는 데 필요한 정보를 제공하고 모든 처리는 Theater 의 enter 메서드안에 존재했었다  
-enter 메서드는 프로세스이며 Audience, TicketSeller, TicketOffice, Bag 은 데이터이다.  
+개선 이전에는 관람객을 입장시키는 데 필요한 정보를 제공하고 모든 처리는 chapter1.Theater 의 enter 메서드안에 존재했었다  
+enter 메서드는 프로세스이며 chapter1.Audience, chapter1.TicketSeller, chapter1.TicketOffice, chapter1.Bag 은 데이터이다.  
 * 프로세스와 데이터를 별도의 모듈에 위치시키는 방식을 절차적 프로그래밍이라 한다.  
 * 절차적 프로그래밍에서는 관람객과 판매원이 수동적인 존재  
 * 데이터의 변경으로 인한 영향을 고립/격리시키기 어렵다 -> 변경하기 어려움  
 
 #### 책임의 이동
 근본적인 차이는 책임의 이동  
-* 개선 이전에는 책임이 Theater 에 집중되어 있음  
+* 개선 이전에는 책임이 chapter1.Theater 에 집중되어 있음  
 * 개선 이후에는 각 객체가 자신이 맡은 일은 스스로 처리 -> 책임의 이동  
 * 데이터와 프로세스를 하나의 단위로 통합  
-* TicketSeller 의 책임: 티켓을 판매
-* Audience 의 책임: 티켓을 구매
+* chapter1.TicketSeller 의 책임: 티켓을 판매
+* chapter1.Audience 의 책임: 티켓을 구매
 * 설계를 어렵게 만드는 것은 의존성
 * 불필요한 의존성을 제거함으로써 객체 사이의 결합도를 낮춤
-* Theater 가 몰도 되는 세부사항을 Audience 와 TicketSeller 내부로 감춰 캡슐화
+* chapter1.Theater 가 몰도 되는 세부사항을 chapter1.Audience 와 chapter1.TicketSeller 내부로 감춰 캡슐화
 * 객체의 자율성을 높이고 객체들의 응집도를 높힘
 
 #### 더 개선할 수 있다
-1. Bag 개선
-* Bag 은 Audience 에 끌려다니는 수동적인 존재
+1. chapter1.Bag 개선
+* chapter1.Bag 은 chapter1.Audience 에 끌려다니는 수동적인 존재
 * public 메서드였던 hasInvitation, minusAmount, setTicket 를 private 으로 변경  
-* Bag 의 구현을 캡슐화 -> Audience 를 Bag 의 구현이 아닌 인터페이스에만 의존하도록 수정
-2. TicketSeller 개선
-* TicketSeller 는 TicketOffice 에 있는 Ticket 을 마음대로 꺼내서 자기 멋대로 Audience 에 팔고 Audience 에게 받은 돈을 마음대로 TicketOffice 에 넣어 버림
-* TicketOffice 에 sellTicketTo 메서드 추가하고 TicketSeller 의 sellTo 메서드의 구현을 옮김
-* TicketSeller 가 Ticket 의 의존성을 제거했지만, TicketOffice 는 Audience 의 의존성이 추가됨
+* chapter1.Bag 의 구현을 캡슐화 -> chapter1.Audience 를 chapter1.Bag 의 구현이 아닌 인터페이스에만 의존하도록 수정
+2. chapter1.TicketSeller 개선
+* chapter1.TicketSeller 는 chapter1.TicketOffice 에 있는 chapter1.Ticket 을 마음대로 꺼내서 자기 멋대로 chapter1.Audience 에 팔고 chapter1.Audience 에게 받은 돈을 마음대로 chapter1.TicketOffice 에 넣어 버림
+* chapter1.TicketOffice 에 sellTicketTo 메서드 추가하고 chapter1.TicketSeller 의 sellTo 메서드의 구현을 옮김
+* chapter1.TicketSeller 가 chapter1.Ticket 의 의존성을 제거했지만, chapter1.TicketOffice 는 chapter1.Audience 의 의존성이 추가됨
 * 트레이드오프가 발생
 
 #### 그래, 거짓말이다!
-* 관람객과 판매자가 스스로 자신의 일을 처리하기 때문에 코드에서 Audience 와 TicketSeller 역시 스스로 자신을 책임져야 한다
+* 관람객과 판매자가 스스로 자신의 일을 처리하기 때문에 코드에서 chapter1.Audience 와 chapter1.TicketSeller 역시 스스로 자신을 책임져야 한다
 * 직관에 따르는 코드는 이해하기 더 쉽다
-* 현실에서 Theater, Bag, TicketOffice 는 자율적인 존재지만 객체지향에서는 자율적인 존재로 바뀐다
+* 현실에서 chapter1.Theater, chapter1.Bag, chapter1.TicketOffice 는 자율적인 존재지만 객체지향에서는 자율적인 존재로 바뀐다
 
 04 객체지향 설계
 -------------
@@ -122,4 +122,74 @@ enter 메서드는 프로세스이며 Audience, TicketSeller, TicketOffice, Bag 
 * 변경에 유연하게 대응할 수 있는 코드
 * 의존성을 효율적으로 통제할 수 있는 다양한 방법
 * 변경 가능한 코드란 이해하기 쉬운 코드
+
+CHAPTER2
+========
+01 영화 예매 시스템
+---------------
+#### 요구사항 살펴보기
+* 영화는 영화에 대한 기본 정보를 표현한다. 제목, 상영시간, 가격 정보
+* 상영은 실제로 관객들이 영화를 관람하는 사건을 표현한다. 상영 일자, 시간, 순번
+* 영화는 하루 중 다양한 시간대에 걸쳐 한 번 이상 상영될 수 있다
+* 사용자가 실제로 예매하는 대상은 영화가 아니라 상영이다
+* 사용자는 특정 시간에 상영되는 영화를 관람할 수 있는 권리를 구매하기 위해 돈을 지불한다
+* 특정한 조건을 만족하는 예매자는 요금을 할인받을 수 있다
+* 할인액을 결정하는 두 가지 규칙이 존재한다. 할인 조건, 할인 정책
+* 할인 조건은 가격의 할인 여부를 결정하며 순서 조건과 기간 조건으로 나눌 수 있다
+* 순서 조건은 상영 순번을 이용해 할인 여부를 결정하는 규칙이다.  
+순서 조건의 순번이 10인 경우 매일 10번째로 상영되는 영화를 예매한 사용자들에게 할인 혵택을 제공한다.
+* 기간 조건은 영화 상영 시작 시간을 이용해 할인 여부를 결정한다.  
+기간 조건은 요일, 시작 시간, 종료 시간의 세 부분으로 구성되며 영화 시작 시간이 해당 기간 안에 포함될 경우 요금을 할인한다.  
+요일이 월요일, 시작 시간이 오전 10시, 종료 시간이 오후1시인 기간 조건을 사용하면 매주 월요일 오전 10시부터 오후 1시 사이에  
+상영되는 모든 영화에 대해 할인 혜택을 적용할 수 있다
+* 할인 조건은 할인 요금을 결정한다. 금액 할인 정책, 비율 할인 정책
+* 영화별로 하나의 할인 정책만 할당할 수 있다
+* 할인 조건은 다수의 할인 조건을 함께 지정할 수 있다. 순서 조건과 기간 조건을 섞는 것도 가능하다
+* 먼저 사용자의 예매 정보가 할인 조건 중 하나라도 만족하는 지 검사한다
+* 할인 조건을 만족할 경우 할인 정책을 이용해 할인 요금을 계산한다
+* 할인 정책은 1인 기준으로 책정된다
   
+02 객체지향 프로그래밍을 향해
+-----------------------
+#### 협력, 객체, 클래스
+* 어떤 클래스가 필요한지를 고민하기 전에 어떤 객체들이 필요한지 고민하라.
+* 객체를 독립적인 존재가 아니라 기능을 구현하기 위해 협력하는 공동체의 일원으로 봐야한다.
+#### 도메인의 구조를 따르는 프로그램 구조
+* 도메인: 문제를 해결하기 위해 사용자가 프로그램을 사용하는 분야
+<img width="1080" alt="도메인" src="https://user-images.githubusercontent.com/26158696/73265254-e9a7f100-4217-11ea-85f8-b0a73c911ce2.png">
+#### 클래스 구현하기
+* 클래스를 구현하거나 다른 개발자에 ㅔ의해 개발된 클래스를 사용할 때 가장 중요한 것은 클래스의 경계를 구분 짓는 것이다.
+* 클래스는 내부와 외부로 구분되며 훌륭한 클래스를 설계하기 위한 핵심은 어떤 부분을 외부에 공개하고 어떤 부분을 감출지를 결정하는 것이다.
+#### 자율적인 객체
+* 객체는 상태와 행동을 함께 가지는 복합적인 존재
+* 객체가 스스로 판단하고 행동하는 자율적인 존재
+* 캡슐화: 데이터와 기능을 객체 내부로 함께 묶는 것
+* 객체 내부에 대한 접근을 통제하는 이유는 객체를 자율적인 존재로 만들기 위해서다
+* 캡슐화와 접근 제어는 객체를 두 부분으로 나눈다.
+1. 퍼블릭 인터페이스: 외부에서 접근 가능한 부분
+2. 구현: 내부에서만 접근 가능한 부분
+* 객체지향의 핵심 원칙: 인터페이스와 구현의 분리
+#### 프로그래머의 자유
+프로그래머의 역할
+1. 클래스 작성자
+2. 클라이언트 프로그래머
+* 구현 은닉: 클래스 작성자는 클라이언트 프로그래머에게 필요한 부분만 공개, 클라이언트 프로그래머는 영향도 걱정없이 내부 구현 변경
+* 객체의 외부와 내부를 구분하면 클라이언트 프로그래머가 알아야 할 지식의 양이 줄어든다.
+* 변경에 대한 파급효과 제어
+#### 협력하는 객체들의 공동체
+* 하나의 인스턴스 변수만 포함하더라도 개념을 명시적으로 표현하는 것은 전체적인 설계의 명확성과 유연성을 높이는 첫걸음이다.
+#### 협력에 관한 짧은 이야기
+* 객체의 내부 상태는 외부에서 접근하지 못하도록 감춰야한다
+* 외부에 공개하는 퍼블릭 인터페이스를 통해 내부 상태에 접근할 수 있도록 허용한다
+
+03 할인 요금 구하기
+----------------
+#### 할인 요금 계산을 위한 협력 시작하기
+    예매 요금을 계산하는 협력: Movie 는 제목과 상영시간 기본 요금 할인 정책을 속성으로 가진다    
+    속성값은 생성자를 통해 전달받는다  
+    calculateMovieFee 메서드에 어떤 할인 정책을 사용할 것인지 결정하는 코드가 어디에도 없다
+#### 할인 정책과 할인 조건
+    할인정책  
+     ㄴ 금액 할인 정책
+     ㄴ 비율 할인 정책
+    
